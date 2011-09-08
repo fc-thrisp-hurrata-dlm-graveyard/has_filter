@@ -1,3 +1,5 @@
+Note, this doesn't work yet -- at all
+
 = TODO 
   
   - proper datamapper syntax for self.all methods
