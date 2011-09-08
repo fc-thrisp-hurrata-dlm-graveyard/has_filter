@@ -47,7 +47,7 @@ use:
   
      class TicketsController < ApplicationController
        has_filter :date, :using => [:which]
-       has_filter :by_tag
+       has_filter :by_priority
   
        def index
          @tickets = apply_filters(Ticket).all
