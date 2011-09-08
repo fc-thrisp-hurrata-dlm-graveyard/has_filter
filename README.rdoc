@@ -1,6 +1,70 @@
+= TODO 
+  
+  - proper datamapper syntax for self.all methods
+  - actual code
+  - A way of connoting specifically filter methods in the model
+    1. filter methods are indicated by filter_
+    2. a block that gets read as maybe
+       filters do
+          def date
+          end
+          def by_priority
+          end
+       end
+  - again, actual code (not to mention, test code)
+
+  
 = dm-has_filter
 
-Description goes here.
+dm-has_filter provides a generic interface for building and applying multiple filters from a Rails controller to a DataMapper model
+
+Inspired by https://github.com/plataformatec/has_scope and using DataMapper where a way was needed to provide multiple filters to a model through url params
+
+install:
+
+  gem install dm-has_filter
+  OR 
+  gem 'dm-has_filter'
+
+use:
+
+   Define your filters in your model by creating methods prefixed with filter_:
+  
+     class Ticket
+       include DataMapper::Resource
+     
+       #...properties
+    
+       def self.filter_date
+         all(````date == 'which' passed in url````)
+       end
+  
+       def self.filter_by_priority
+         all(````priority == priority in the url````)
+       end
+   
+   Use your preferrred filters in your controller:
+  
+     class TicketsController < ApplicationController
+       has_filter :date, :using => [:which]
+       has_filter :by_tag
+  
+       def index
+         @tickets = apply_filters(Ticket).all
+       end
+     end
+
+   See results from your application in a browser:
+
+      /tickets
+      #=> a normal request returning all tickets
+
+      /tickets?params[date][which]=20110910
+      #=> all tickets with the date of September 10th, 2011
+ 
+      /tickets?by_priority=low
+      #=> all tickets with a priority of low      
+  
 
 == Contributing to dm-has_filter
  
