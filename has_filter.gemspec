@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "dm-has_filter"
+  s.name = "has_filter"
   s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -23,11 +23,11 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "lib/dm-has_filter.rb",
+    "lib/has_filter.rb",
     "test/helper.rb",
-    "test/test_dm-has_filter.rb"
+    "test/test_has_filter.rb"
   ]
-  s.homepage = "http://github.com/blueblank/dm-has_filter"
+  s.homepage = "http://github.com/blueblank/has_filter"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
@@ -54,4 +54,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rcov>, [">= 0"])
   end
 end
-
