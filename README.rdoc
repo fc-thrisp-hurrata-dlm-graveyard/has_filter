@@ -1,19 +1,22 @@
 Note, this doesn't work yet -- at all
 
-= TODO 
+= Brief roadmap and TODO  
   
-  - proper datamapper syntax for self.all methods
-  - actual code
-  - A way of connoting specifically filter methods in the model
-    1. filter methods are indicated by filter_
-    2. a block that gets read as maybe
+  1) Recognizing filters in dm model 
+     A way of connoting specifically filter methods in the model
+    
+    a block that gets read as maybe
        filters do
           def date
           end
           def by_priority
           end
        end
-  - again, actual code (not to mention, test code)
+     To be precise, a way to build an object specific to access by apply_filters
+
+   2) proper datamapper syntax for self.all methods
+   3) passing url params to model
+   4) recognizing and returning results
 
   
 = has_filter
@@ -36,20 +39,28 @@ use:
        include DataMapper::Resource
      
        #...properties
-    
-       def self.filter_date
-         all(````date == 'which' passed in url````)
-       end
   
-       def self.filter_by_priority
-         all(````priority == priority in the url````)
-       end
+       #def filters
+         def self.by_priority(priority)
+           all(:priority => priority)
+         end
+  
+         def self.by_date(date)
+           all(:created_at => date )
+         end
+
+         def self.by_period(started_at, ended_at)
+           all(:created_at.gt=>started_at,  :created_at.lt=>ended_at) 
+         end
+       end 
+  
    
    Use your preferrred filters in your controller:
   
      class TicketsController < ApplicationController
-       has_filter :date, :using => [:which]
        has_filter :by_priority
+       has_filter :by_date, :using => [:which]
+       has_filter :by_period, :using => [:started_at, :ended_at]
   
        def index
          @tickets = apply_filters(Ticket).all
@@ -61,14 +72,17 @@ use:
       /tickets
       #=> a normal request returning all tickets
 
+      /tickets?by_priority=low
+      #=> all tickets with a priority of low 
+
       /tickets?params[date][which]=20110910
       #=> all tickets with the date of September 10th, 2011
- 
-      /tickets?by_priority=low
-      #=> all tickets with a priority of low      
+
+      /tickets?params[by_period][started_at]=20110701&params[by_period][ended_at]=20101013
+      #=> all tickets within the speficied period     
   
 
-== Contributing to dm-has_filter
+== Contributing to has_filter
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
