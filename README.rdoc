@@ -16,17 +16,17 @@ Note, this doesn't work yet -- at all
   - again, actual code (not to mention, test code)
 
   
-= dm-has_filter
+= has_filter
 
-dm-has_filter provides a generic interface for building and applying multiple filters from a Rails controller to a DataMapper model
+has_filter provides a controller based interface for building and applying multiple filters to a DataMapper model.
 
 Inspired by https://github.com/plataformatec/has_scope and using DataMapper where a way was needed to provide multiple filters to a model through url params
 
 install:
 
-  gem install dm-has_filter
+  gem install has_filter
   OR 
-  gem 'dm-has_filter'
+  gem 'has_filter'
 
 use:
 
@@ -82,4 +82,3 @@ use:
 
 Copyright (c) 2011 blueblank. See LICENSE.txt for
 further details.
-
