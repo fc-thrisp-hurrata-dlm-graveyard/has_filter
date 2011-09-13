@@ -1,0 +1,6 @@
+rvm: 1.9.2
+notifications:
+  disabled: true
+branches:
+  only:
+    - master
