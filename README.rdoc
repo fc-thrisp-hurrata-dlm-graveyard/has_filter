@@ -1,29 +1,9 @@
-Note, this doesn't work yet -- at all
-
-= Brief roadmap and TODO  
-  
-  1) Recognizing filters in dm model 
-     A way of connoting specifically filter methods in the model
-    
-    a block that gets read as maybe
-       filters do
-          def date
-          end
-          def by_priority
-          end
-       end
-     To be precise, a way to build an object specific to access by apply_filters
-
-   2) proper datamapper syntax for self.all methods
-   3) passing url params to model
-   4) recognizing and returning results
-
-  
 = has_filter
 
-has_filter provides a controller based interface for building and applying multiple filters to a DataMapper model.
+has_filter provides a controller based interface for building and applying multiple filters to a DataMapper model through url params.
 
-Inspired by https://github.com/plataformatec/has_scope and using DataMapper where a way was needed to provide multiple filters to a model through url params
+This project is just a fork of https://github.com/plataformatec/has_scope at this point using DataMapper models.
+Simple filters work without any fundamental change to the forked code, but more complex cases have yet to be tested. 
 
 install:
 
@@ -40,21 +20,18 @@ use:
      
        #...properties
   
-       #def filters
-         def self.by_priority(priority)
-           all(:priority => priority)
-         end
+       def self.by_priority(priority)
+         all(:priority => priority)
+       end
   
-         def self.by_date(date)
-           all(:created_at => date )
-         end
+       def self.by_date(date)
+         all(:created_at => date)
+       end
 
-         def self.by_period(started_at, ended_at)
-           all(:created_at.gt=>started_at,  :created_at.lt=>ended_at) 
-         end
+       def self.by_period(started_at, ended_at)
+         all(:created_at.gt=>started_at,  :created_at.lt=>ended_at) 
        end 
   
-   
    Use your preferrred filters in your controller:
   
      class TicketsController < ApplicationController
@@ -65,6 +42,7 @@ use:
        def index
          @tickets = apply_filters(Ticket).all
        end
+
      end
 
    See results from your application in a browser:
@@ -79,8 +57,22 @@ use:
       #=> all tickets with the date of September 10th, 2011
 
       /tickets?params[by_period][started_at]=20110701&params[by_period][ended_at]=20101013
-      #=> all tickets within the speficied period     
+      #=> all tickets within the specified period     
   
+= Brief roadmap and TODO  
+  
+  1) more complex test to see where the code falls apart with datamapper
+  2) Recognizing filters in dm model 
+     A way of connoting specifically filter methods in the model
+     Isn't really necessary now that simple cases have been shown to work. A comment in your model suffices.
+     a block that gets read as maybe
+       filters do
+          def date
+          end
+          def by_priority
+          end
+       end
+     
 
 == Contributing to has_filter
  

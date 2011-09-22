@@ -76,7 +76,7 @@ protected
   end
 
   # Set the real value for the current scope if type check.
-  def parse_value
+  def parse_value(type, key, value)
     if type == :boolean
       TRUE_VALUES.include?(value)
     elsif value && ALLOWED_TYPES[type].none?{ |klass| value.is_a?(klass) }
@@ -94,7 +94,7 @@ protected
       value = value.values_at(*options[:using])
       block ? block.call(self, target, value) : target.send(scope, *value)
     else
-    block ? block.call(self, target, value) : target.send(fiter, value)#basic case 
+    block ? block.call(self, target, value) : target.send(filter, value)#basic case 
     end
   end
 
